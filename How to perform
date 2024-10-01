@@ -1,0 +1,65 @@
+ Step-by-Step Instructions
+
+1. **Create the `requirements.txt` File**
+   - Open a text editor (like Notepad) and create a new file.
+   - Add the following lines to the file:
+     ```
+     streamlit
+     transformers
+     torch
+     ```
+   - Save the file as `requirements.txt` in the `C:\Users\Administrator\text_summarization` directory.
+
+2. **Install Required Packages**
+   - After saving the `requirements.txt` file, go back to your command prompt.
+   - Make sure you're still in the `text_summarization` directory:
+     ```bash
+     cd C:\Users\Administrator\text_summarization
+     ```
+   - Now, run the following command to install the required packages:
+     ```bash
+     pip install -r requirements.txt
+     ```
+
+3. **Create the Python Files**
+   - Create the `summary_model.py` file:
+     - Open a text editor and add the following code:
+       ```python
+       from transformers import pipeline
+
+       def summarize_text(text):
+           summarizer = pipeline("summarization")
+           summary = summarizer(text, max_length=130, min_length=30, do_sample=False)
+           return summary[0]['summary_text']
+       ```
+     - Save this file as `summary_model.py` in the same directory.
+
+   - Create the `app.py` file:
+     - Open a text editor and add the following code:
+       ```python
+       import streamlit as st
+       from summary_model import summarize_text
+
+       st.title("Text Summarization App")
+
+       input_text = st.text_area("Enter the text you want to summarize:", height=300)
+
+       if st.button("Summarize"):
+           if input_text:
+               summary = summarize_text(input_text)
+               st.subheader("Summary:")
+               st.write(summary)
+           else:
+               st.error("Please enter some text to summarize.")
+       ```
+     - Save this file as `app.py` in the same directory.
+
+4. **Run the Application**
+   - In the command prompt, ensure you’re still in the `text_summarization` directory and run:
+     ```bash
+     streamlit run app.py
+     ```
+
+5. **Access the Application**
+   - After running the above command, open your web browser and go to the URL shown in the command prompt (usually `http://localhost:8501`).
+
